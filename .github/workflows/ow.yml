@@ -1,0 +1,48 @@
+# This workflow runs a script to open and scroll a specific website
+
+name: Website Scroller
+
+# Controls when the workflow will run (e.g., manually)
+on:
+  workflow_dispatch:
+
+jobs:
+  scroll_website:
+    runs-on: ubuntu-latest # Use a standard Ubuntu runner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Get your repository code (including the scrolling script)
+
+      # --- Replace these steps based on your scripting language and library ---
+      # Example for Python with Selenium
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # Install Selenium and a headless browser driver (like geckodriver for Firefox or chromedriver)
+          pip install selenium webdriver-manager # webdriver-manager helps manage drivers
+
+      - name: Install Firefox (or Chrome) for headless Browse
+        run: |
+          # Example for Firefox - you might need to install Chrome if your script uses chromedriver
+          sudo apt-get update && sudo apt-get install -y firefox-geckodriver firefox
+
+      # --- End of language/library specific setup ---
+
+      - name: Run website scrolling script
+        run: |
+          # Replace 'python your_script_name.py' with the command to run your script
+          # Ensure your script contains the logic to navigate and scroll
+          python scroll_website.py
+
+      # Optional: Add steps here to check output or artifacts if your script generates any
+      # - name: Upload scrolling output
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: scrolling-output
+      #     path: path/to/your/output/file
